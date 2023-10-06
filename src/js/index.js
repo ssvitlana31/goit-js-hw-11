@@ -87,6 +87,9 @@ const onSubmit = async e => {
   } catch (error) {
     console.log('No result for your request', error);
   }
+
+  e.target.reset();
+  formEl = {};
 };
 
 const removeBtnLoadMore = e => {
