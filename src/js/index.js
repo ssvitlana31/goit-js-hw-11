@@ -1,39 +1,79 @@
 import Notiflix from 'notiflix';
-import axios from 'axios';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+import { PixabayAPI } from './unsplash-api';
 
-axios.get('/users').then(res => {
-  console.log(res.data);
-});
-export class Pixabay {
-  #BASE_URL = 'https://pixabay.com/api/';
-  #API_KEY = '38181676-c389c3ce2b1eee7a286cf8f0e';
+const pixabay = new PixabayAPI(20);
 
-  constructor() {
-    this.searchQuery = '';
-    this.page = 1;
-    // this.totalPage = 0;
-    this.lightbox = new SimpleLightbox('.gallery a', {
-      captionDelay: 250,
-      captionsData: 'alt',
-    });
-  }
+pixabay.getPhotos().then(console.log);
 
-  axiosPhotos() {
-    const searchParams = {
-      key: this.#API_KEY,
-      q: this.searchQuery,
-      image_type: 'photo',
-      orientation: 'horizontal',
-      safesearch: true,
-      per_page: 40,
-      page: this.page,
-    };
+// const listEl = document.querySelector('.gallery');
+// const formEl = document.querySelector('.search-form');
+// const inputEl = document.querySelector('[name="searchQuery"]');
+// const loadMoreEl = document.querySelector('.btn-load-more');
+// const searchEl = document.querySelector('.btn-submit');
 
-    return axios.get(`${this.#BASE_URL}?`, { params: searchParams });
-    // .then(response => {
-    //     const { totalHits } = response.data;
-    //     this.totalPage = Math.ceil(totalHits / 20);
-    //     return response
-    // });
-  }
-}
+// const perPage = 40;
+// let page = 1;
+// let searchQuery = '';
+// let submitClick = false;
+
+// let gallery = new SimpleLightbox('.gallery a', {
+//   captionsData: 'alt',
+//   captionDelay: 250,
+// });
+
+// formEl.addEventListener('submit', onSubmit);
+
+// async function onSubmit(e) {
+//   e.preventDefault();
+//   submitClick = true;
+// }
+
+// function imageTemplate(images) {
+//   return images
+//     .map(
+//       ({
+//         webformatURL,
+//         largeImageURL,
+//         tags,
+//         likes,
+//         views,
+//         comments,
+//         downloads,
+//       }) => {
+//         return `
+//             <div class="photo-card">
+//               <a class = "link-photo" href = "${largeImageURL}" >
+//                 <img src="${webformatURL}" alt="${tags}" loading="lazy"  width="380"
+//                     height="300" />
+//               </a>
+//               <div class="info">
+//                 <p class="info-item">
+//                    <b class = "b">Likes</b>
+//                    ${likes}
+//                 </p>
+//                 <p class="info-item">
+//                    <b class = "b">Views</b>
+//                    ${views}
+//                 </p>
+//                 <p class="info-item">
+//                    <b class = "b">Comments</b>
+//                    ${comments}
+//                 </p>
+//                 <p class="info-item">
+//                    <b class = "b">Downloads</b>
+//                    ${downloads}
+//                 </p>
+//                </div>
+//             </div>
+//             `;
+//       }
+//     )
+//     .join('');
+// }
+
+// function renderPage(images) {
+//   const markup = imageTemplate(images);
+//   listEl.insertAdjacentHTML('beforeend', markup);
+// }
